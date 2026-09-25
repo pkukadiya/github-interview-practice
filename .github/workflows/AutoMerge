@@ -1,0 +1,29 @@
+name: CI WorkFlows
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+# Grant write permissions so the workflow can merge PRs
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build-and-automerge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run a test script
+        run: echo "WorkFlows Triggered Successfully"
+
+      # Automatically merge the Pull Request using GitHub CLI
+      - name: Auto-merge PR
+        run: gh pr merge --squash --auto "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
