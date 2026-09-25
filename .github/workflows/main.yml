@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actioin/checkout@v4
+        uses: action/checkout@v4
 
       - name: Run a test script
         run: echo "WorkFlows Triggered Successfully"
